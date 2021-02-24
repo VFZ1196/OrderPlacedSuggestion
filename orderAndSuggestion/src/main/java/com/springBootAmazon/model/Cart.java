@@ -12,7 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,14 +23,19 @@ public class Cart {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cart_id")
 	private int cartId;
+	
+	private int orderId;
 
 	private String category;
 
 	private String subCategory;
 
 	private String specificCategory;
+	
+	private boolean isPlaced;
+	
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "cart_items", joinColumns = @JoinColumn(name = "cart_id"),
 	                                inverseJoinColumns = @JoinColumn(name = "items_id"))
 	private Set<Items> items = new HashSet<>();
@@ -39,11 +44,14 @@ public class Cart {
 
 	}
 
-	public Cart(String category, String subCategory, String specificCategory, Set<Items> items) {
+	public Cart(int orderId, String category, String subCategory, String specificCategory, boolean isPlaced,
+			Set<Items> items) {
 		super();
+		this.orderId = orderId;
 		this.category = category;
 		this.subCategory = subCategory;
 		this.specificCategory = specificCategory;
+		this.isPlaced = isPlaced;
 		this.items = items;
 	}
 
@@ -53,6 +61,14 @@ public class Cart {
 
 	public void setCartId(int cartId) {
 		this.cartId = cartId;
+	}
+
+	public int getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
 	}
 
 	public String getCategory() {
@@ -77,6 +93,14 @@ public class Cart {
 
 	public void setSpecificCategory(String specificCategory) {
 		this.specificCategory = specificCategory;
+	}
+
+	public boolean isPlaced() {
+		return isPlaced;
+	}
+
+	public void setPlaced(boolean isPlaced) {
+		this.isPlaced = isPlaced;
 	}
 
 	public Set<Items> getItems() {
