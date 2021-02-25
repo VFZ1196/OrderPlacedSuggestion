@@ -23,7 +23,7 @@ public class Cart {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cart_id")
 	private int cartId;
-	
+
 	private int orderId;
 
 	private String category;
@@ -31,13 +31,11 @@ public class Cart {
 	private String subCategory;
 
 	private String specificCategory;
-	
+
 	private boolean isPlaced;
-	
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "cart_items", joinColumns = @JoinColumn(name = "cart_id"),
-	                                inverseJoinColumns = @JoinColumn(name = "items_id"))
+	@JoinTable(name = "cart_items", joinColumns = @JoinColumn(name = "cart_id"), inverseJoinColumns = @JoinColumn(name = "items_id"))
 	private Set<Items> items = new HashSet<>();
 
 	public Cart() {

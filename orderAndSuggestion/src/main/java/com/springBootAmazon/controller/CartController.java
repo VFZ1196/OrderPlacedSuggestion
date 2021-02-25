@@ -32,11 +32,17 @@ public class CartController {
 	@GetMapping("/cart")
 	public List<Cart> getAll() {
 		return cartRepository.findAll();
+	
 	}
 	
 	@GetMapping("/cart/{id}")
 	public Cart getById(@PathVariable int id) {
 		return cartRepository.findById(id).get();
+	}
+	
+	@GetMapping("/cart1/{specificCategory}")
+	public ResponseEntity<Cart> getBySpecificCategory(@PathVariable String specificCategory) throws Exception {
+		return cartService.getBySpecificCategory(specificCategory);
 	}
 	
 	@PutMapping("/cart/{cartId}/{id}")
