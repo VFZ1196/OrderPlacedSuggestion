@@ -24,27 +24,44 @@ public class CartController {
 	@Autowired
 	private CartService cartService;
 	
+	//Add product into cart
 	@PostMapping("/cart")
 	public Cart add(@RequestBody Cart cart) {
 		return cartRepository.save(cart);
 	}
 	
+	//Get All Product
 	@GetMapping("/cart")
 	public List<Cart> getAll() {
 		return cartRepository.findAll();
 	
 	}
 	
+	//Get product by id
 	@GetMapping("/cart/{id}")
 	public Cart getById(@PathVariable int id) {
 		return cartRepository.findById(id).get();
 	}
 	
-	@GetMapping("/cart1/{specificCategory}")
-	public ResponseEntity<Cart> getBySpecificCategory(@PathVariable String specificCategory) throws Exception {
-		return cartService.getBySpecificCategory(specificCategory);
+	//Get product by category
+	@GetMapping("/cart1/{cartId}/{category}")
+	public ResponseEntity<Cart> getByCategory(@PathVariable int cartId, @PathVariable String category) throws Exception {
+		return cartService.getByCategory(cartId, category);
 	}
 	
+	//Get product by sub category
+	@GetMapping("/cart2/{cartId}/{subCategory}")
+	public ResponseEntity<Cart> getBySubCategory(@PathVariable int cartId, @PathVariable String subCategory) throws Exception {
+		return cartService.getBySubCategory(cartId, subCategory);
+	}
+	
+	//Get product by specific category
+	@GetMapping("/cart3/{cartId}/{specificCategory}")
+	public ResponseEntity<Cart> getBySpecificCategory(@PathVariable int cartId,@PathVariable String specificCategory) throws Exception {
+		return cartService.getBySpecificCategory(cartId, specificCategory);
+	}
+	
+	//order and update product
 	@PutMapping("/cart/{cartId}/{id}")
 	public ResponseEntity<Cart> updateCart(@PathVariable int cartId, @PathVariable int id) throws Exception {
 		return cartService.updateCart(cartId, id);

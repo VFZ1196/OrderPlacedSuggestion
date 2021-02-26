@@ -1,10 +1,9 @@
 package com.springBootAmazon.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.springBootAmazon.model.Cart;
 import com.springBootAmazon.repository.CartRepository;
@@ -15,7 +14,7 @@ public class CartService {
 	@Autowired
 	private CartRepository cartRepository;
 
-	public ResponseEntity<Cart> updateCart(@PathVariable int cartId, @PathVariable Integer id) throws Exception {
+	public ResponseEntity<Cart> updateCart(int cartId, Integer id) throws Exception {
 
 		Cart cart = cartRepository.findById(cartId).get();
 
@@ -34,11 +33,38 @@ public class CartService {
 		return ResponseEntity.ok(update);
 	}
 	
-	@GetMapping("/cart/{specificCategory}")
-	public ResponseEntity<Cart> getBySpecificCategory(@PathVariable String specificCategory) {
+	public ResponseEntity<Cart> getByCategory(int cartId, String category) {
 
-		Cart cart = cartRepository.findBySpecificCategory(specificCategory).get();
+		Cart cart = cartRepository.findById(cartId).get();
+		
+		if(category.equals(cart.getCategory())){
+			
+			return ResponseEntity.ok(cart);
 
-		return ResponseEntity.ok().body(cart);
+		}
+		//return (ResponseEntity<Cart>) ResponseEntity.badRequest();
+		return new ResponseEntity("Resource Not Found",HttpStatus.NOT_FOUND);
+	}
+	
+	public ResponseEntity<Cart> getBySubCategory(int cartId,String subCategory) {
+
+		Cart cart = cartRepository.findById(cartId).get();
+
+		if(subCategory.equals(cart.getSubCategory())){
+			
+			return ResponseEntity.ok(cart);
+		}
+		return null;
+	}
+	
+	public ResponseEntity<Cart> getBySpecificCategory(int cartId, String specificCategory) {
+
+		Cart cart = cartRepository.findById(cartId).get();
+
+		if(specificCategory.equals(cart.getSpecificCategory())){
+			
+			return ResponseEntity.ok(cart);
+		}
+		return null;
 	}
 }

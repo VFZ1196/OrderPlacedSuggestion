@@ -33,6 +33,15 @@ public class Cart {
 	private String specificCategory;
 
 	private boolean isPlaced;
+	
+	@Column(unique = true)
+	private int cid;
+	
+	@Column(unique = true)
+	private int sid;
+	
+	@Column(unique = true)
+	private int specid;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "cart_items", joinColumns = @JoinColumn(name = "cart_id"), inverseJoinColumns = @JoinColumn(name = "items_id"))
@@ -42,14 +51,17 @@ public class Cart {
 
 	}
 
-	public Cart(int orderId, String category, String subCategory, String specificCategory, boolean isPlaced,
-			Set<Items> items) {
+	public Cart(int orderId, String category, String subCategory, String specificCategory, boolean isPlaced, int cid,
+			int sid, int specid, Set<Items> items) {
 		super();
 		this.orderId = orderId;
 		this.category = category;
 		this.subCategory = subCategory;
 		this.specificCategory = specificCategory;
 		this.isPlaced = isPlaced;
+		this.cid = cid;
+		this.sid = sid;
+		this.specid = specid;
 		this.items = items;
 	}
 
@@ -99,6 +111,30 @@ public class Cart {
 
 	public void setPlaced(boolean isPlaced) {
 		this.isPlaced = isPlaced;
+	}
+
+	public int getCid() {
+		return cid;
+	}
+
+	public void setCid(int cid) {
+		this.cid = cid;
+	}
+
+	public int getSid() {
+		return sid;
+	}
+
+	public void setSid(int sid) {
+		this.sid = sid;
+	}
+
+	public int getSpecid() {
+		return specid;
+	}
+
+	public void setSpecid(int specid) {
+		this.specid = specid;
 	}
 
 	public Set<Items> getItems() {
