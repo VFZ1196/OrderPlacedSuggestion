@@ -14,6 +14,7 @@ public class CartService {
 	@Autowired
 	private CartRepository cartRepository;
 
+	//Placed Order and set value from false to true
 	public ResponseEntity<Cart> updateCart(int cartId, Integer id) throws Exception {
 
 		Cart cart = cartRepository.findById(cartId).get();
@@ -33,6 +34,7 @@ public class CartService {
 		return ResponseEntity.ok(update);
 	}
 	
+	//Get cart item by category
 	public ResponseEntity<Cart> getByCategory(int cartId, String category) {
 
 		Cart cart = cartRepository.findById(cartId).get();
@@ -46,6 +48,7 @@ public class CartService {
 		return new ResponseEntity("Resource Not Found",HttpStatus.NOT_FOUND);
 	}
 	
+	//Get cart item by sub category
 	public ResponseEntity<Cart> getBySubCategory(int cartId,String subCategory) {
 
 		Cart cart = cartRepository.findById(cartId).get();
@@ -57,6 +60,7 @@ public class CartService {
 		return null;
 	}
 	
+	//Get cart item by specific category
 	public ResponseEntity<Cart> getBySpecificCategory(int cartId, String specificCategory) {
 
 		Cart cart = cartRepository.findById(cartId).get();
