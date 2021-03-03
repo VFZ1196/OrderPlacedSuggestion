@@ -66,4 +66,5 @@ public class CartController {
 	public ResponseEntity<Cart> updateCart(@PathVariable int cartId, @PathVariable int id) throws Exception {
 		return cartService.updateCart(cartId, id);
 	}
+	
 }

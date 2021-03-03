@@ -1,6 +1,8 @@
 package com.springBootAmazon.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -33,13 +35,15 @@ public class Cart {
 	private String specificCategory;
 
 	private boolean isPlaced;
-	
+
+	private Float price;
+
 	@Column(unique = true)
 	private int cid;
-	
+
 	@Column(unique = true)
 	private int sid;
-	
+
 	@Column(unique = true)
 	private int specid;
 
@@ -47,22 +51,29 @@ public class Cart {
 	@JoinTable(name = "cart_items", joinColumns = @JoinColumn(name = "cart_id"), inverseJoinColumns = @JoinColumn(name = "items_id"))
 	private Set<Items> items = new HashSet<>();
 
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "cart_items", joinColumns = @JoinColumn(name = "cart_id"),
+	inverseJoinColumns = @JoinColumn(name = "wallet_id"))
+	private List<Wallet> wal = new ArrayList<>();
+
 	public Cart() {
 
 	}
 
-	public Cart(int orderId, String category, String subCategory, String specificCategory, boolean isPlaced, int cid,
-			int sid, int specid, Set<Items> items) {
+	public Cart(int orderId, String category, String subCategory, String specificCategory, boolean isPlaced,
+			Float price, int cid, int sid, int specid, Set<Items> items, List<Wallet> wal) {
 		super();
 		this.orderId = orderId;
 		this.category = category;
 		this.subCategory = subCategory;
 		this.specificCategory = specificCategory;
 		this.isPlaced = isPlaced;
+		this.price = price;
 		this.cid = cid;
 		this.sid = sid;
 		this.specid = specid;
 		this.items = items;
+		this.wal = wal;
 	}
 
 	public int getCartId() {
@@ -113,6 +124,14 @@ public class Cart {
 		this.isPlaced = isPlaced;
 	}
 
+	public Float getPrice() {
+		return price;
+	}
+
+	public void setPrice(Float price) {
+		this.price = price;
+	}
+
 	public int getCid() {
 		return cid;
 	}
@@ -143,6 +162,14 @@ public class Cart {
 
 	public void setItems(Set<Items> items) {
 		this.items = items;
+	}
+
+	public List<Wallet> getWal() {
+		return wal;
+	}
+
+	public void setWal(List<Wallet> wal) {
+		this.wal = wal;
 	}
 
 }
