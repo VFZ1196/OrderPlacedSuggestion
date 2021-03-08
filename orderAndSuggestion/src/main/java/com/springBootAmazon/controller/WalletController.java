@@ -1,5 +1,7 @@
 package com.springBootAmazon.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +29,15 @@ public class WalletController {
 	public Wallet addAmount(@RequestBody Wallet wallet) {
 		return walletRepository.save(wallet);
 	}
-
+	
+	@PostMapping("/getProduct")
+	public String getProduct(@RequestBody Map<String, Object> product) {
+		System.out.println(product);
+		return null;
+	}
+	
+	
+	
 	// Get wallet Amount
 	@GetMapping("/wallet/{id}")
 	public Wallet getById(@PathVariable int id) {

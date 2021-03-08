@@ -22,17 +22,13 @@ public class WalletService {
 	public ResponseEntity<Wallet> checkWallet(int cartId,int walletId) throws Exception {
 
 		Wallet wallet = walletRepository.findById(walletId).get();
-		
 		Cart cart = cartRepository.findById(cartId).get();
-
+		
 		if (cart.getPrice() > wallet.getWalletAmount()) {
 
 			System.out.println("Insufficient balance");
 
-		} else if(cart.isPlaced()==false){
-			
-			cart.setPlaced(true);	
-		    cartRepository.save(cart);
+		} else {
 
 			wallet.setWalletAmount(wallet.getWalletAmount() - cart.getPrice());
 

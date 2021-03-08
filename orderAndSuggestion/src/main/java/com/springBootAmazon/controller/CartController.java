@@ -43,7 +43,7 @@ public class CartController {
 		return cartRepository.findById(id).get();
 	}
 	
-	//Get product by category
+	//Get product by category	
 	@GetMapping("/cart1/{cartId}/{category}")
 	public ResponseEntity<Cart> getByCategory(@PathVariable int cartId, @PathVariable String category) throws Exception {
 		return cartService.getByCategory(cartId, category);
